@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: cicd-demo-app
-          image: lyt920/cicd-demo-app:v2
+          image: lyt0413/cicd-demo-app:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
