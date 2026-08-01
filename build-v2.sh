@@ -1,3 +1,3 @@
-docker build -t darryl1975/cicd-demo-app:v2 .
+docker build -t lyt920/cicd-demo-app:v2 .
 
-docker push darryl1975/cicd-demo-app:v2
+docker push lyt920/cicd-demo-app:v2

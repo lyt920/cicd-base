@@ -1,0 +1,33 @@
+<configuration>
+    <!-- Optional: Define default log pattern if not set elsewhere -->
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n" />
+
+    <!-- Resolve Spring properties so labels are populated correctly -->
+    <springProperty scope="context" name="appName" source="spring.application.name" defaultValue="unknown"/>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <http>
+            <url>http://loki:3100/loki/api/v1/push</url>
+        </http>
+        <format>
+            <label>
+                <pattern>application=${appName},host=${HOSTNAME:-localhost},level=%level</pattern>
+            </label>
+            <message>
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+            </message>
+        </format>
+    </appender>
+
+    <!-- Optional: Console appender for local debugging -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOKI"/>
+    </root>
+</configuration>
